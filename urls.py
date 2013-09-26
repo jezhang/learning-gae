@@ -15,7 +15,9 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-
+    url(r'^$', TemplateView.as_view(template_name="index.html")),
+    url(r'^index/$', TemplateView.as_view(template_name="index.html")),
     url(r'^hello/$', 'gaeapp.views.hello', name='hello'),
+    url(r'^telecomshops/$', 'gaeapp.views.list_nj_ct_shops', name='hello'),
     url(r'^bootstrap/$', TemplateView.as_view(template_name="bootstrap/bootstrap.html")),
 )
