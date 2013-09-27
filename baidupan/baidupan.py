@@ -2,7 +2,7 @@
 #coding=utf-8
 
 import requests
-
+import urllib2
 
 class BaiduPan(object):
     base_url = 'https://pcs.baidu.com/rest/2.0/pcs/'
@@ -82,9 +82,9 @@ class BaiduPan(object):
         self.urlpath = 'file'
         self.method = 'upload'
         self._method = 'POST'
-		print '===>%s' %filename
         try:
-            f = open(filename, 'rb').read()
+            # f = open(filename, 'rb').read()
+            f = urllib2.urlopen(filename).read()
         except Exception, e:
             print e
             raise
