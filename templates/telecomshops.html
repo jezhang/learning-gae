@@ -13,16 +13,18 @@
 	<th>营业时间</th>
 </tr>	
 {% for item in items %}
-	<tr>
+	<tr><!--
 		{% for x in item %}
-			<!--
-			https://www.google.com.au/search?q=django+jinjia+tuple&oq=django+jinjia+tuple&aqs=chrome..69i57j69i60.348j0&sourceid=chrome&espvd=210&es_sm=93&ie=UTF-8#es_sm=93&q=django%20template%20tuple%20index
-			http://stackoverflow.com/questions/13414721/how-to-index-elements-of-a-tuple-in-django-template-using-a-variable
-			-->
 			<td row="{{ forloop.counter0 }}" col="{{ i|add:6 }}">
 				{{ x }}
 			</td>
-		{% endfor %}
+		{% endfor %}-->
+		<td>{{ item.2 }}</td>
+		<td>{{ item.0 }}</td>
+		<td>{{ item.5 }}</td>
+		<td>{{ item.4 }}</td>
+		<td>{{ item.3 }}</td>
+		<td>{{ item.1 }}</td>
 	</tr>
 {% endfor %}
 </table>

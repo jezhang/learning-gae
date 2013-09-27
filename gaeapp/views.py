@@ -9,6 +9,9 @@ import logging
 def hello(request):
 	return HttpResponse('Hello World!')
 
+def encrypt(request):
+	return HttpResponse("encrypt")
+
 
 def list_nj_ct_shops(request):
 	url = 'http://js.189.cn/entityHall_getEntityList.action?areaId=3&cityId=9&busiType=0'
