@@ -18,6 +18,10 @@ handlers:
 - url: /html
   static_dir: static/html
   
+- url: /bd_a4aecde549d27bef.txt
+  static_files: static/bd_a4aecde549d27bef.txt
+  upload: static/bd_a4aecde549d27bef.txt
+
 - url: /favicon.ico
   static_files: static/favicon.ico
   upload: static/favicon.ico

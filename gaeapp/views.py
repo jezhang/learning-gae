@@ -2,9 +2,49 @@
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
+from google.appengine.api import urlfetch
 import re
-import urllib2
+import urllib2,urllib
 import logging
+# from baidupcs import PCS
+# 3.f173cae0ac8914da7c51b10a17c38d8c.2592000.1382842741.1144098186-1469382
+ACCESS_TOKEN = '3.d1835ee236e603961f013e2099fc2193.2592000.1382851881.1144098186-1469382'
+URI = {'file': 'https://pcs.baidu.com/rest/2.0/pcs/file',
+       'quota': 'https://pcs.baidu.com/rest/2.0/pcs/quota',
+       'thumbnail': 'https://pcs.baidu.com/rest/2.0/pcs/thumbnail',
+       'stream': 'https://pcs.baidu.com/rest/2.0/pcs/stream',
+       'cloud_dl': 'https://pcs.baidu.com/rest/2.0/pcs/services/cloud_dl'}
+
+def get_baidupan_quota(request):
+	# way 1
+	# url = 'https://pcs.baidu.com/rest/2.0/pcs/quota?method=%s&access_token=%s' %('info',ACCESS_TOKEN)
+	# print url
+	# html1 = urllib2.urlopen(url).read()	
+	# way 2
+	# html2 = urlfetch.fetch(url)
+	# way 3
+	# params = {'method': 'info','access_token': ACCESS_TOKEN}
+	form_fields = {
+		"method": "info",
+		"access_token": ACCESS_TOKEN ,
+		"email": "jean.zhang@outlook.com"
+	}
+
+	form_data = urllib.urlencode(form_fields)
+
+	logging.info('===>URL:%s' %URI['quota'])
+	logging.info('===>Params:%s' %form_data)	
+
+	result = urlfetch.fetch(url='https://pcs.baidu.com/rest/2.0/pcs/quota',
+                        payload=form_data,
+                        method=urlfetch.POST,
+                        headers={'Content-Type': 'application/x-www-form-urlencoded'})
+	logging.info('result.status_code=%d' %result.status_code)
+	logging.info('final_url=%s' %result.final_url)
+	# return HttpResponse('1.urllib2:%s<br/>2.urlfetch:%s<br/>3.urlfetch:%s' %(html1,html2.content,html3.content))	
+	return HttpResponse("Content:%s" %result.content)
+
+
 
 def hello(request):
 	return HttpResponse('Hello World!')

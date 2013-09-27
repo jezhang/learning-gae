@@ -2,7 +2,7 @@
 import os
 gettext = lambda s: s
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
-print('===>PROJECT_PATH=%s' %PROJECT_PATH)
+# print('===>PROJECT_PATH=%s' %PROJECT_PATH)
 
 # Django settings for gaetemplate project.
 

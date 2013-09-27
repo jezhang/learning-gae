@@ -18,9 +18,11 @@ urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name="index.html")),
     url(r'^index/$', TemplateView.as_view(template_name="index.html")),
     url(r'^hello/$', 'gaeapp.views.hello', name='hello'),
+    url(r'^testpcs/$', 'gaeapp.views.get_baidupan_quota', name='get_baidupan_quota'),
+
     url(r'^telecomshops/$', 'gaeapp.views.list_nj_ct_shops', name='telecomshops'),
     url(r'^encrypt/$', 'gaeapp.views.encrypt', name='encrypt'),
-    
+
 
     url(r'^bootstrap/$', TemplateView.as_view(template_name="bootstrap/bootstrap.html")),
 )
