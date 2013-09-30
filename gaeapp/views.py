@@ -6,7 +6,13 @@ from google.appengine.api import urlfetch
 import re
 import urllib2,urllib
 import logging
+<<<<<<< HEAD
 from gaeapp.utilities import Browser
+=======
+import json
+from baidupan.baidupan import BaiduPan
+
+>>>>>>> ef241f8a954871af1b2b387e25ed3aaae5edcf1a
 
 # from baidupcs import PCS
 # 3.f173cae0ac8914da7c51b10a17c38d8c.2592000.1382842741.1144098186-1469382
@@ -16,6 +22,15 @@ URI = {'file': 'https://pcs.baidu.com/rest/2.0/pcs/file',
        'thumbnail': 'https://pcs.baidu.com/rest/2.0/pcs/thumbnail',
        'stream': 'https://pcs.baidu.com/rest/2.0/pcs/stream',
        'cloud_dl': 'https://pcs.baidu.com/rest/2.0/pcs/services/cloud_dl'}
+
+
+def upload_test(request):
+	img_url = 'http://news.baidu.com/z/resource/r/image/2013-09-27/79a124a0b6ece385dc322042ae1c5e0e.jpg'
+	baidupan = BaiduPan(ACCESS_TOKEN)
+	print baidupan.quota()
+	print baidupan.mkdir('newfolder')
+	# print baidupan.upload(img_url, path='/apps/jezhang/a.jpg')
+	return HttpResponse("Completed.")
 
 def get_baidupan_quota(request):
 	# way 1
