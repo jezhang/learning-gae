@@ -21,7 +21,9 @@ urlpatterns = patterns('',
     url(r'^testpcs/$', 'gaeapp.views.get_baidupan_quota', name='get_baidupan_quota'),
 
     url(r'^telecomshops/$', 'gaeapp.views.list_nj_ct_shops', name='telecomshops'),
+    url(r'^GetTelecomNum/$', TemplateView.as_view(template_name="getTelecomNum.html")), # getTelecomNum.html
     url(r'^encrypt/$', 'gaeapp.views.encrypt', name='encrypt'),
+    
 
 
     url(r'^bootstrap/$', TemplateView.as_view(template_name="bootstrap/bootstrap.html")),

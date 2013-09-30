@@ -36,8 +36,8 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
             <!--
             <li><a href="#contact">Contact</a></li>-->
             <li class="dropdown">
@@ -45,7 +45,7 @@
               <ul class="dropdown-menu">
                 <li><a href="/telecomshops">南京电信营业厅</a></li>
                 <li><a href="/html/enc.html" target="_blank">在线加密解密</a></li>
-                <li><a href="#">Something else here</a></li>
+                <li><a href="/GetTelecomNum">南京电信选号</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Nav header</li>
                 <li><a href="#">Separated link</a></li>
@@ -69,8 +69,10 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
+        {% block header %}
         <h2>Hello, Everyone</h2>
         <p>Welcome to my GAE application.</p>        
+        {% endblock %}
       </div>
     </div>
 
