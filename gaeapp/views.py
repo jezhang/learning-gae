@@ -6,13 +6,10 @@ from google.appengine.api import urlfetch
 import re
 import urllib2,urllib
 import logging
-<<<<<<< HEAD
 from gaeapp.utilities import Browser
-=======
 import json
 from baidupan.baidupan import BaiduPan
 
->>>>>>> ef241f8a954871af1b2b387e25ed3aaae5edcf1a
 
 # from baidupcs import PCS
 # 3.f173cae0ac8914da7c51b10a17c38d8c.2592000.1382842741.1144098186-1469382
