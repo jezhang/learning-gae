@@ -9,6 +9,8 @@ import logging
 from gaeapp.utilities import Browser
 import json
 from baidupan.baidupan import BaiduPan
+import hashlib, time, re
+from xml.etree import ElementTree as ET
 
 
 # from baidupcs import PCS
@@ -95,8 +97,26 @@ def list_nj_ct_shops(request):
 		# logging.info("%s\t%s\t%s\t%s\t%s\t%s" % (x[0],x[1],x[2],x[3],x[4],x[5]))
 
 
-	
-	
+#http://www.douban.com/group/topic/37244247/?cid=444813097
 
-
+def weixin(request):
+	logging.info("Begin to weixin.")	
+	for item in request.GET:
+		logging.info('%s=%s' % (item,request.GET[item]))
+	token = '83370809'
+	signature = request.GET.get('signature','')
+	timestamp = request.GET.get('timestamp','')
+	nonce = request.GET.get('nonce','')
+	echostr = request.GET.get('echostr','')
+	tmpList = [token,timestamp,nonce]
+	tmpList.sort()
+	tmpstr = "".join(tmpList)
+	logging.info("tmpstr=%s" %tmpstr)
+	hashstr = hashlib.sha1(tmpstr).hexdigest() 
+	logging.info("hashstr=%s" %hashstr)
+	logging.info("End to weixin.")
+	if hashstr == signature: 
+		return HttpResponse(echostr)
+	else:
+		return HttpResponse("failure.")
 

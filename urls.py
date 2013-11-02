@@ -23,6 +23,9 @@ urlpatterns = patterns('',
     url(r'^telecomshops/$', 'gaeapp.views.list_nj_ct_shops', name='telecomshops'),
     url(r'^GetTelecomNum/$', TemplateView.as_view(template_name="getTelecomNum.html")), # getTelecomNum.html
     url(r'^encrypt/$', 'gaeapp.views.encrypt', name='encrypt'),
+
+    # weixin app
+    url(r'^weixin/$', 'gaeapp.views.weixin', name='weixin'),
     
 
 
