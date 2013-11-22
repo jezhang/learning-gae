@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 
 # from google.appengine.api import urlfetch
-import urllib2
+import urllib2,urllib,requests
 # from pcs import Client
 
 API_KEY = '4XetgNeZqQrY22EHow2ZlWFn'
@@ -15,11 +16,13 @@ URI = {'file': 'https://pcs.baidu.com/rest/2.0/pcs/file',
        'cloud_dl': 'https://pcs.baidu.com/rest/2.0/pcs/services/cloud_dl'}
 
 def get_authorization_code():
-	url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=4XetgNeZqQrY22EHow2ZlWFn&redirect_uri=http%3A%2F%2Fa.jezhang.info%2Foauth_redirect/'
-	resp = urllib2.urlopen(url)	
-	print resp.read()
-	print 'Completed!'
-
+	url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=4XetgNeZqQrY22EHow2ZlWFn&redirect_uri=http%3A%2F%2Fa.jezhang.info%2Foauth_redirect'
+	# url = 'https://api.github.com/user'
+	r = requests.get(url)
+	print r.status_code
+	print r.headers['content-type']
+	print r.content
+	
 
 def get_baidupan_quota():
 	url = 'https://pcs.baidu.com/rest/2.0/pcs/quota?method=%s&access_token=%s' %('info',ACCESS_TOKEN)
