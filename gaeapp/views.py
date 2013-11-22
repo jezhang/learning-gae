@@ -15,7 +15,8 @@ from xml.etree import ElementTree as ET
 
 # from baidupcs import PCS
 # 3.f173cae0ac8914da7c51b10a17c38d8c.2592000.1382842741.1144098186-1469382
-ACCESS_TOKEN = '3.d1835ee236e603961f013e2099fc2193.2592000.1382851881.1144098186-1469382'
+# ACCESS_TOKEN = '3.d1835ee236e603961f013e2099fc2193.2592000.1382851881.1144098186-1469382'
+ACCESS_TOKEN = '3.4ba078e865c7ebc8e18778df39af7283.2592000.1387691823.1144098186-1469382'
 URI = {'file': 'https://pcs.baidu.com/rest/2.0/pcs/file',
        'quota': 'https://pcs.baidu.com/rest/2.0/pcs/quota',
        'thumbnail': 'https://pcs.baidu.com/rest/2.0/pcs/thumbnail',

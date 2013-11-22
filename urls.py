@@ -24,6 +24,9 @@ urlpatterns = patterns('',
     url(r'^GetTelecomNum/$', TemplateView.as_view(template_name="getTelecomNum.html")), # getTelecomNum.html
     url(r'^encrypt/$', 'gaeapp.views.encrypt', name='encrypt'),
 
+    # baidupan required
+    url(r'^oauth_redirect/$','baidupan.views.oauth_redirect',name='oauth_redirect'),
+
     # weixin app
     url(r'^weixin/$', 'gaeapp.views.weixin', name='weixin'),
     
