@@ -10,56 +10,67 @@ from gaeapp.utilities import Browser
 import json
 from baidupan.baidupan import BaiduPan
 import hashlib, time, re
-from xml.etree import ElementTree as ET
+from gaeapp.urlutil import fetch_url
+from StringIO import StringIO
 
 
-# from baidupcs import PCS
-# 3.f173cae0ac8914da7c51b10a17c38d8c.2592000.1382842741.1144098186-1469382
-# ACCESS_TOKEN = '3.d1835ee236e603961f013e2099fc2193.2592000.1382851881.1144098186-1469382'
-ACCESS_TOKEN = '3.4ba078e865c7ebc8e18778df39af7283.2592000.1387691823.1144098186-1469382'
+ACCESS_TOKEN = '3.228b4ee4dc9277a5e2b78115c072e17c.2592000.1387863382.1144098186-1469382'
 URI = {'file': 'https://pcs.baidu.com/rest/2.0/pcs/file',
        'quota': 'https://pcs.baidu.com/rest/2.0/pcs/quota',
        'thumbnail': 'https://pcs.baidu.com/rest/2.0/pcs/thumbnail',
        'stream': 'https://pcs.baidu.com/rest/2.0/pcs/stream',
        'cloud_dl': 'https://pcs.baidu.com/rest/2.0/pcs/services/cloud_dl'}
 
+def btdownload(request,hash_code):
+	# http://www.rmdown.com/link.php?hash=1339085070678e73f9daa97639aa38817159cb84966
+	# http://www.rmdown.com/link.php?hash=1338f26abb6ae777f512a9904e943068260bc061561
+	url = 'http://www.rmdown.com/link.php?hash=%s' %hash_code # 133193f151fb24dbbba2bd2f809970afc4de685b958'
+	logging.info('call download_bt_from_url(%s)' %url)
+	find_host_index = url.find('link.php?hash=')
+	host = url[:find_host_index] # host = http://www.rmdown.com/ 
+	action = 'download.php'
+	url_post = '%s%s' %(host,action)
+	logging.info('bt post url %s' %url_post)
+	
+	result = fetch_url(url)
+	html = result.content
+	find_ref_start_index = html.find('"ref" value="') + 13 # 13
+	find_ref_end_index = html.find('" style="font-size:10px;"')
+	ref = html[find_ref_start_index:find_ref_end_index] # ref = 133193f151fb24dbbba2bd2f809970afc4de685b958
+
+	find_rref_start_index = html.find('"reff" value="') + 14 # 14
+	find_rref_end_index = html.find('"><BR>')
+	rref = html[find_rref_start_index:find_rref_end_index] # rref = MTM4NTE5OTc3OA==
+
+	params = urllib.urlencode({
+		"ref": ref, 
+		"reff": rref, 
+		"submit":"download"})
+	logging.info('post data: ref=%s,rref=%s' %(ref,rref))
+	result = fetch_url(url_post,params)
+	logging.info("fetch_url(post:%s):%d" %(url_post,result.status_code))
+	f = StringIO(result.content)
+	response = HttpResponse(f, content_type='application/octet-stream')
+	response['Content-Disposition'] = 'attachment; filename=%s.torrent'% ref
+	return response
 
 def upload_test(request):
 	img_url = 'http://news.baidu.com/z/resource/r/image/2013-09-27/79a124a0b6ece385dc322042ae1c5e0e.jpg'
 	baidupan = BaiduPan(ACCESS_TOKEN)
-	print baidupan.quota()
-	print baidupan.mkdir('newfolder')
-	# print baidupan.upload(img_url, path='/apps/jezhang/a.jpg')
+	# logging.info(baidupan.quota())
+	# logging.info(baidupan.mkdir('abc'))
+	# f = download_bt()
+	hash = '133193f151fb24dbbba2bd2f809970afc4de685b958'
+	logging.info(baidupan.upload('http://%s/btdownload/%s/' %(request.get_host(),hash), path='/apps/jezhang/%s.torrent' %hash))
 	return HttpResponse("Completed.")
 
 def get_baidupan_quota(request):
 	# way 1
-	# url = 'https://pcs.baidu.com/rest/2.0/pcs/quota?method=%s&access_token=%s' %('info',ACCESS_TOKEN)
-	# print url
-	# html1 = urllib2.urlopen(url).read()	
-	# way 2
-	# html2 = urlfetch.fetch(url)
-	# way 3
-	# params = {'method': 'info','access_token': ACCESS_TOKEN}
-	form_fields = {
-		"method": "info",
-		"access_token": ACCESS_TOKEN ,
-		"email": "jean.zhang@outlook.com"
-	}
+	url = 'https://pcs.baidu.com/rest/2.0/pcs/quota?method=%s&access_token=%s' %('info',ACCESS_TOKEN)
+	html = urllib2.urlopen(url).read()	
+	logging.info(html)
+	return HttpResponse(html)
 
-	form_data = urllib.urlencode(form_fields)
-
-	logging.info('===>URL:%s' %URI['quota'])
-	logging.info('===>Params:%s' %form_data)	
-
-	result = urlfetch.fetch(url='https://pcs.baidu.com/rest/2.0/pcs/quota',
-                        payload=form_data,
-                        method=urlfetch.POST,
-                        headers={'Content-Type': 'application/x-www-form-urlencoded'})
-	logging.info('result.status_code=%d' %result.status_code)
-	logging.info('final_url=%s' %result.final_url)
-	# return HttpResponse('1.urllib2:%s<br/>2.urlfetch:%s<br/>3.urlfetch:%s' %(html1,html2.content,html3.content))	
-	return HttpResponse("Content:%s" %result.content)
 
 
 
