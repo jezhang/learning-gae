@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name="index.html")),
     url(r'^index/$', TemplateView.as_view(template_name="index.html")),
     url(r'^hello/$', 'gaeapp.views.hello', name='hello'),
+    url(r'^clientinfo/$', 'gaeapp.views.clientinfo', name='display_meta'),
     # url(r'^pcsinfo/$', 'gaeapp.views.get_baidupan_quota', name='get_baidupan_quota'),    
     url(r'^upload_test/$', 'gaeapp.views.upload_test', name='upload_test'),
     url(r'^btdownload/([a-zA-Z0-9]+?)/$', 'gaeapp.views.btdownload', name='btdownload'),
@@ -27,11 +28,7 @@ urlpatterns = patterns('',
 
     # baidupan required
     url(r'^oauth_redirect/$','baidupan.views.oauth_redirect',name='oauth_redirect'),
-
     # weixin app
-    url(r'^weixin/$', 'gaeapp.views.weixin', name='weixin'),
-    
-
-
+    url(r'^weixin/$', 'gaeapp.views.weixin', name='weixin'), 
     url(r'^bootstrap/$', TemplateView.as_view(template_name="bootstrap/bootstrap.html")),
 )

@@ -21,6 +21,15 @@ URI = {'file': 'https://pcs.baidu.com/rest/2.0/pcs/file',
        'stream': 'https://pcs.baidu.com/rest/2.0/pcs/stream',
        'cloud_dl': 'https://pcs.baidu.com/rest/2.0/pcs/services/cloud_dl'}
 
+def clientinfo(request):
+	values = request.META.items()
+	values.sort()
+	html = []
+	for k,v in values:
+		html.append('<tr><td>%s</td><td>%s</td></tr>' % (k, v))
+	return HttpResponse('<table>%s</table>' % '\n'.join(html))
+
+
 def btdownload(request,hash_code):
 	# http://www.rmdown.com/link.php?hash=1339085070678e73f9daa97639aa38817159cb84966
 	# http://www.rmdown.com/link.php?hash=1338f26abb6ae777f512a9904e943068260bc061561
