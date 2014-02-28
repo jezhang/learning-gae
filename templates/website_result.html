@@ -1,0 +1,21 @@
+{% extends "bootstrap/base.html" %}
+{% block title %} Websites Test Result {% endblock %}
+{% block header %}
+{% endblock %}
+{% block content %}
+{% if results %}
+<table class="table">
+{% for result in results %}
+<tr>
+	<td>{{result.website.company}}</td>	
+	<td>{{result.website.name}}</td>
+	<td><a href="{{result.website.url}}" target="_blank">{{result.website.url}}</a></td>
+	<td>{{result.dtime_test}}</td>
+	<td>{{result.connectability}}</td>
+	<td>{{result.status_code}}</td>
+	<td>{{result.message}}</td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+{% endblock %}

@@ -31,4 +31,8 @@ urlpatterns = patterns('',
     # weixin app
     url(r'^weixin/$', 'gaeapp.views.weixin', name='weixin'), 
     url(r'^bootstrap/$', TemplateView.as_view(template_name="bootstrap/bootstrap.html")),
+
+    # qjmy website monitor
+    url(r'^qjmytest/$', 'gaeapp.qjmy.qjmytest', name='qjmytest'),
+    url(r'^check/([a-zA-Z0-9.]+?)/$', 'gaeapp.views.check_website', name='check_website'),
 )

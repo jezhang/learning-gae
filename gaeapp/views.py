@@ -12,6 +12,9 @@ from baidupan.baidupan import BaiduPan
 import hashlib, time, re
 from gaeapp.urlutil import fetch_url
 from StringIO import StringIO
+from gaeapp.models import Website,WebsiteResult
+from requests.exceptions import *
+import requests
 
 
 ACCESS_TOKEN = '3.228b4ee4dc9277a5e2b78115c072e17c.2592000.1387863382.1144098186-1469382'
@@ -140,4 +143,45 @@ def weixin(request):
 		return HttpResponse(echostr)
 	else:
 		return HttpResponse("failure.")
+
+def check_website(request,company):
+	Website.init()
+	result_list = check_websites_connectability(company)
+	return render_to_response('website_result.html',{'results':result_list})
+
+def check_websites_connectability(company):
+	websites = Website.get_websites_by_company(company)
+	website_result_list = []
+	for website in websites:
+		result = WebsiteResult(website=website)
+		# result.website = website
+		try:
+			r = requests.get(website.url)
+		except ConnectionError as e:
+			logging.error(e)
+			result.connectability = False
+			result.status_code = -1
+			result.message = str(e)
+		except RequestException as e:
+			logging.error(e)
+			result.connectability = False
+			result.status_code = -1
+			result.message = str(e)
+		except HTTPError as e:
+			logging.error(e)
+			result.connectability = False
+			result.status_code = -1
+			result.message = str(e)
+		else:
+			if 200 != r.status_code :
+				result.connectability = True
+				result.status_code = r.status_code
+				result.message = u'访问异常'
+			else:
+				result.connectability = True
+				result.status_code = r.status_code
+				result.message = u'访问正常'
+		result.put()
+		website_result_list.append(result)
+	return website_result_list
 
