@@ -5,6 +5,8 @@
 {% block content %}
 {% if results %}
 <table class="table">
+<tr><td>组织</td><td>网站名称</td><td>网站地址</td><td>格林威治时间</td><td>连接成功</td><td>返回代码</td><td>访问</td>
+</tr>	
 {% for result in results %}
 <tr>
 	<td>{{result.website.company}}</td>	
